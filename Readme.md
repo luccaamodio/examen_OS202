@@ -30,20 +30,20 @@ Ce programme simule une galaxie contenant un trou noir central massif et $N$ ét
 
 Une étoile $i$ est définie par sa position $\vec{p}_{i}$, sa vitesse $\vec{v}_{i}$ et sa masse $m_{i}$. On définit également sa couleur en fonction de sa masse pour l'affichage.
 
-La masse $m_{i}$ restera constante tout le long de la simulation, et seules la position $\vec{p}_{i}$ et $\vec{v}_{i}$ sont mis à jour à chaque itération en temps à l'aide d'un schéma en temps de *Verlet* (avec un pas de temps $\delta t$ ) :
+La masse $m_{i}$ restera constante tout le long de la simulation, et seules la position $\vec{p_{i}}$ et $\vec{v_{i}}$ sont mis à jour à chaque itération en temps à l'aide d'un schéma en temps de *Verlet* (avec un pas de temps $\delta t$ ) :
 
   - Pour chaque étoile $i$
-      - Calculer l'accélération $\vec{a}_{i}^{(1)}$ subie par l'étoile (par le trou noir et les autres étoiles)
+      - Calculer l'accélération $\vec{a_{i}}^{(1)}$ subie par l'étoile (par le trou noir et les autres étoiles)
       - Mettre à jour la position de l'étoile : 
       $\vec{p_{i}} \leftarrow \vec{p_{i}} + \delta t.\vec{v_{i}} + \frac{1}{2}\delta t^{2} \vec{a}_{i}^{(1)}$
       - Calculer la nouvelle accélération $\vec{a}^{(2)}_{i}$ subie par l'étoile à sa nouvelle position
       - Mettre à jour sa vitesse : 
-      $\vec{v}_{i} \leftarrow \vec{v}_{i} + \frac{1}{2}\delta t.\left(\vec{a}_{i}^{(1)}+\vec{a}_{i}^{(2)}\right)$
+      $\vec{v_{i}} \leftarrow \vec{v_{i}} + \frac{1}{2}\delta t.\left(\vec{a}_{i}^{(1)}+\vec{a}_{i}^{(2)}\right)$
 
 Quant au calcul de l'accélération subie par l'étoile, on utilise les lois de la gravitation universelle de Newton :
 
 $$
-\vec{a}_{i} = \sum_{j\neq i} \mathcal{G}\frac{m_{j}}{\left\|\vec{p}_{j}(t)-\vec{p}_{i}(t)\right\|^{3}}(\vec{p}_{j}(t)-\vec{p}_{i}(t))
+\vec{a_{i}} = \sum_{j\neq i} \mathcal{G}\frac{m_{j}}{\left\|\vec{p}_{j}(t)-\vec{p}_{i}(t)\right\|^{3}}(\vec{p}_{j}(t)-\vec{p}_{i}(t))
 $$
 où $\mathcal{G} = 1.560339.10^{-13}$ est la constante de gravitation universelle exprimée pour les unités de mesure suivantes :
   - les distances sont exprimées en années-lumière (la distance que parcourt la lumière en un an)
