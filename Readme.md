@@ -28,7 +28,7 @@ Vous pourrez quitter la salle d'examen uniquement lorsque votre chargé de TD vo
 
 Ce programme simule une galaxie contenant un trou noir central massif et $N$ étoiles gravitant autour de ce trou noir.
 
-Une étoile $i$ est définie par sa position $\vec{p}_{i}$, sa vitesse $\vec{v}_{i}$ et sa masse $m_{i}$. On définit également sa couleur en fonction de sa masse pour l'affichage.
+Une étoile $i$ est définie par sa position $\vec{p_{i}}$, sa vitesse $\vec{v_{i}}$ et sa masse $m_{i}$. On définit également sa couleur en fonction de sa masse pour l'affichage.
 
 La masse $m_{i}$ restera constante tout le long de la simulation, et seules la position $\vec{p_{i}}$ et $\vec{v_{i}}$ sont mis à jour à chaque itération en temps à l'aide d'un schéma en temps de *Verlet* (avec un pas de temps $\delta t$ ) :
 
