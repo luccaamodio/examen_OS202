@@ -38,12 +38,12 @@ La masse $m_{i}$ restera constante tout le long de la simulation, et seules la p
       $\vec{p_{i}} \leftarrow \vec{p_{i}} + \delta t.\vec{v_{i}} + \frac{1}{2}\delta t^{2} \vec{a}_{i}^{(1)}$
       - Calculer la nouvelle accélération $\vec{a}^{(2)}_{i}$ subie par l'étoile à sa nouvelle position
       - Mettre à jour sa vitesse : 
-      $\vec{v_{i}} \leftarrow \vec{v_{i}} + \frac{1}{2}\delta t.\left(\vec{a}_{i}^{(1)}+\vec{a}_{i}^{(2)}\right)$
+      $\vec{v_{i}} \leftarrow \vec{v_{i}} + \frac{1}{2}\delta t.\left(\vec{a_{i}}^{(1)}+\vec{a_{i}}^{(2)}\right)$
 
 Quant au calcul de l'accélération subie par l'étoile, on utilise les lois de la gravitation universelle de Newton :
 
 $$
-\vec{a_{i}} = \sum_{j\neq i} \mathcal{G}\frac{m_{j}}{\left\|\vec{p}_{j}(t)-\vec{p}_{i}(t)\right\|^{3}}(\vec{p}_{j}(t)-\vec{p}_{i}(t))
+\vec{a_{i}} = \sum_{j\neq i} \mathcal{G}\frac{m_{j}}{\left\|\vec{p_{j}}(t)-\vec{p_{i}}(t)\right\|^{3}}(\vec{p_{j}}(t)-\vec{p_{i}}(t))
 $$
 où $\mathcal{G} = 1.560339.10^{-13}$ est la constante de gravitation universelle exprimée pour les unités de mesure suivantes :
   - les distances sont exprimées en années-lumière (la distance que parcourt la lumière en un an)
