@@ -43,11 +43,9 @@ La masse $m_{i}$ restera constante tout le long de la simulation, et seules la p
 Quant au calcul de l'accélération subie par l'étoile, on utilise les lois de la gravitation universelle de Newton :
 
 $$
-\vec{a_{i}} = \sum_{j\neq i} \mathcal{G} \frac{m_{j}}{\lVert \vec{p_{j}}(t)-\vec{p_{i}}(t)\rVert^{3}}
+\vec{a_{i}} = \sum_{j\neq i} \mathcal{G} \frac{m_{j} (\vec{p_{j}}(t)-\vec{p_{i}}(t))}{\lVert \vec{p_{j}}(t)-\vec{p_{i}}(t)\rVert^{3}}
 $$
 
-$$(\vec{p_{j}}(t)-\vec{p_{i}}(t))
-$$
 où $\mathcal{G} = 1.560339.10^{-13}$ est la constante de gravitation universelle exprimée pour les unités de mesure suivantes :
   - les distances sont exprimées en années-lumière (la distance que parcourt la lumière en un an)
   - la masse est exprimée en *masse-solaire* (c'est à dire que notre soleil dans cette unité est de masse égale à 1, et on exprime la masse des étoiles proportionnellement à la masse de notre soleil)
