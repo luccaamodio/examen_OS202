@@ -202,8 +202,8 @@ Raisons :
 
 En instrumentant précisément le code MPI, on obtient par exemple pour $N = 1000$ :
 
-- 4 processus, 1 thread numba : $\text{avg\_step} \approx 0{,}053$ s, temps moyen de communication $\approx 2\cdot 10^{-4}$ s, soit seulement 0{,}4\% du pas de temps ;
-- 12 processus, 1 thread numba : $\text{avg\_step} \approx 0{,}082$ s, temps moyen de communication $\approx 6{,}7\cdot 10^{-3}$ s, soit environ 8\% du pas.
+- 4 processus, 1 thread numba : avg_step ≈ 0,053 s, temps moyen de communication ≈ 2·10⁻⁴ s, soit seulement 0,4 % du pas de temps ;
+- 12 processus, 1 thread numba : avg_step ≈ 0,082 s, temps moyen de communication ≈ 6,7·10⁻³ s, soit environ 8 % du pas.
 
 Pour $N = 5000$, le schéma est similaire :
 
