@@ -2,7 +2,6 @@
 #     On crée une classe représentant le système de corps avec la méthode d'intégration basée sur une grille.
 # On utilise numba pour accélérer les calculs.
 import numpy as np
-import visualizer3d
 import sys
 from numba import njit, prange
 
@@ -43,7 +42,7 @@ def generate_star_color(mass : float) -> tuple[int, int, int]:
         # Étoiles de faible masse: rouge-orange
         return (255, 150, 100)
 
-@njit
+@njit(parallel=True)
 def update_stars_in_grid( cell_start_indices : np.ndarray, body_indices : np.ndarray,
                           cell_masses : np.ndarray, cell_com_positions : np.ndarray,
                           masses: np.ndarray,
@@ -84,7 +83,8 @@ def update_stars_in_grid( cell_start_indices : np.ndarray, body_indices : np.nda
         body_indices[index_in_cell] = ibody
         current_counts[morse_idx] += 1
     # Maintenant, on peut calculer le centre de masse et la masse totale de chaque cellule
-    for i in range(len(cell_counts)):
+    # Cette boucle est parallélisable car chaque itération écrit dans une cellule différente.
+    for i in prange(len(cell_counts)):
         cell_mass = 0.0
         com_position = np.zeros(3, dtype=np.float32)
         start_idx = cell_start_indices[i]
@@ -100,7 +100,7 @@ def update_stars_in_grid( cell_start_indices : np.ndarray, body_indices : np.nda
         cell_masses[i] = cell_mass
         cell_com_positions[i] = com_position
 
-@njit
+@njit(parallel=True)
 def compute_acceleration( positions : np.ndarray, masses : np.ndarray,
                           cell_start_indices : np.ndarray, body_indices : np.ndarray,
                           cell_masses : np.ndarray, cell_com_positions : np.ndarray,
@@ -108,7 +108,8 @@ def compute_acceleration( positions : np.ndarray, masses : np.ndarray,
                           cell_size : np.ndarray, n_cells : np.ndarray):
     n_bodies = positions.shape[0]
     a = np.zeros_like(positions)
-    for ibody in range(n_bodies):
+    # Chaque corps peut être traité indépendamment, on parallélise donc cette boucle externe.
+    for ibody in prange(n_bodies):
         pos = positions[ibody]
         cell_idx = np.floor((pos - grid_min) / cell_size).astype(np.int64)
         for i in range(3):
@@ -234,6 +235,7 @@ def run_simulation(filename, geometry=(800,600), ncells_per_dir : tuple[int, int
     global system
     system = NBodySystem(filename, ncells_per_dir=ncells_per_dir)
     # Initialise l'affichage graphique :
+    import visualizer3d
     pos = system.positions
     col = system.colors
     intensity = np.clip(system.masses / system.max_mass, 0.5, 1.0)
@@ -241,16 +243,17 @@ def run_simulation(filename, geometry=(800,600), ncells_per_dir : tuple[int, int
     visu.run(updater=update_positions, dt = dt)
 
 
-filename = "data/galaxy_1000"
-dt = 0.001
-n_cells_per_dir = (20,20,1)
-if len(sys.argv) > 1:
-    filename = sys.argv[1]
-if len(sys.argv) > 2:
-    dt = float(sys.argv[2])
-if len(sys.argv) > 5:
-    n_cells_per_dir = (int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5]))
+if __name__ == "__main__":
+    filename = "data/galaxy_1000"
+    dt = 0.001
+    n_cells_per_dir = (20,20,1)
+    if len(sys.argv) > 1:
+        filename = sys.argv[1]
+    if len(sys.argv) > 2:
+        dt = float(sys.argv[2])
+    if len(sys.argv) > 5:
+        n_cells_per_dir = (int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5]))
     
-print(f"Simulation de {filename} avec dt = {dt} et grille {n_cells_per_dir}")
-run_simulation(filename, ncells_per_dir=n_cells_per_dir, dt=dt)
+    print(f"Simulation de {filename} avec dt = {dt} et grille {n_cells_per_dir}")
+    run_simulation(filename, ncells_per_dir=n_cells_per_dir, dt=dt)
     

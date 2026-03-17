@@ -1,0 +1,11 @@
+filename = data/galaxy_5000
+dt = 0.0015
+n_cells_per_dir = (20, 20, 1)
+n_steps = 50
+snapshot_interval = 10
+total_time_s = 3.7624404430389404
+avg_step_s = 0.07524880886077881
+total_compute_time_s_max = 3.750870999999996
+total_comm_time_s_max = 0.06443699999999941
+avg_compute_time_per_step_s_max = 0.07501741999999992
+avg_comm_time_per_step_s_max = 0.0012887399999999883
