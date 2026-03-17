@@ -201,7 +201,7 @@ Raisons :
 - le coût de communication (Allreduce) et de synchronisation reste relativement modéré,
 - le ratio *calcul utile / overhead* est défavorable.
 
-En instrumentant précisément le code MPI, on obtient par exemple pour $N = 1000$ :
+En instrumentant précisément le code MPI, on obtient pour $N = 1000$ :
 
 - 4 processus, 1 thread numba : avg_step ≈ 0,053 s, temps moyen de communication ≈ 2·10⁻⁴ s, soit seulement 0,4 % du pas de temps ;
 - 12 processus, 1 thread numba : avg_step ≈ 0,082 s, temps moyen de communication ≈ 6,7·10⁻³ s, soit environ 8 % du pas.
