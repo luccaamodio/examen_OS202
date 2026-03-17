@@ -18,29 +18,22 @@ Toutes les mesures détaillées ont été faites sur le cas `data/galaxy_1000`, 
 
 Le système contient un trou noir central et $N$ étoiles. Pour chaque étoile $i$, on suit :
 
-- la position $\vec{p}_i$,
-- la vitesse $\vec{v}_i$,
-- la masse $m_i$ (constante).
+- la position p_i,
+- la vitesse v_i,
+- la masse m_i (constante).
 
 Le schéma en temps utilisé est un schéma de Verlet :
 
-- On calcule d’abord l’accélération $\vec{a}_i^{(1)}(t)$.
-- On met à jour la position :
-  $$
-  \vec{p}_i \leftarrow \vec{p}_i + \Delta t\,\vec{v}_i + \frac{1}{2}\Delta t^2\, \vec{a}_i^{(1)}
-  $$
-- On recalcule l’accélération $\vec{a}_i^{(2)}(t + \Delta t)$.
-- On met à jour la vitesse :
-  $$
-  \vec{v}_i \leftarrow \vec{v}_i + \frac{1}{2}\Delta t \left( \vec{a}_i^{(1)} + \vec{a}_i^{(2)} \right)
-  $$
+- On calcule d’abord l’accélération a_i^(1)(t) subie par l’étoile.
+- On met à jour la position : p_i ← p_i + Δt·v_i + 0,5·Δt²·a_i^(1).
+- On recalcule l’accélération a_i^(2)(t + Δt).
+- On met à jour la vitesse : v_i ← v_i + 0,5·Δt·(a_i^(1) + a_i^(2)).
 
 L’accélération gravitationnelle suit la loi de Newton :
-$$
-\vec{a}_i = \sum_{j \neq i} G \,\frac{m_j\left(\vec{p}_j - \vec{p}_i\right)}{\|\vec{p}_j - \vec{p}_i\|^3}
-$$
 
-Pour éviter la complexité $O(N^2)$, le code utilise une grille spatiale et, pour chaque cellule, la masse totale et le centre de masse.
+- a_i est la somme, pour tous les j ≠ i, de G·m_j·(p_j − p_i) / ||p_j − p_i||³.
+
+Pour éviter la complexité O(N²), le code utilise une grille spatiale et, pour chaque cellule, la masse totale et le centre de masse.
 
 ---
 
@@ -99,10 +92,7 @@ Pour $N = 1000$, $\Delta t = 0{,}001$, grille $(20,20,1)$, $n_{\text{steps}} = 5
 | 8             | 0.10804                    | 108.0            | 0.42                |
 | 12            | 0.14949                    | 149.5            | 0.30                |
 
-Le speedup est défini par :
-$$
-S(p) = \frac{T(1)}{T(p)}
-$$
+Le speedup est défini par : S(p) = T(1) / T(p).
 
 Ici, on constate que le parallélisme numba dégrade la performance pour ce cas : le meilleur temps est obtenu avec 1 seul thread.
 
