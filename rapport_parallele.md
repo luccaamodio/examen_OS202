@@ -224,7 +224,7 @@ Nous avons justement réalisé ces mesures supplémentaires : pour $N = 5000$, l
 Dans le cadre de cet examen, le but principal est de :
 
 - montrer que la parallélisation a été correctement mise en œuvre,
-- analyser **pourquoi**, dans ce cas précis, le speedup n’est pas au rendez-vous,
+- analyser pourquoi, dans ce cas précis, le speedup n’est pas au rendez-vous,
 - et en tirer une conclusion honnête sur les limites du parallélisme pour ce problème et cette taille de données.
 
 ---
@@ -236,17 +236,17 @@ On observe que la densité d’étoiles diminue avec la distance au trou noir. U
 - des processus situés au centre avec beaucoup de travail (forte densité),
 - des processus dans les régions externes avec peu de travail.
 
-C’est un **déséquilibre de charge** (load imbalance) qui pénalise l’accélération globale.
+C’est un déséquilibre de charge (load imbalance) qui pénalise l’accélération globale.
 
 Une distribution “intelligente” des cellules consisterait à :
 
-- attribuer à chaque processus un ensemble de cellules dont la **masse totale** (ou le nombre de corps) est à peu près la même,
+- attribuer à chaque processus un ensemble de cellules dont la masse totale (ou le nombre de corps) est à peu près la même,
 - ce qui améliore le balance de charge.
 
 Mais cette stratégie peut introduire un autre problème :
 
-- les cellules d’un même processus peuvent être **géographiquement éloignées**,
-- augmentant le nombre de voisins distants et le **coût de communication** (échanges de cellules fantômes, synchronisations plus fréquentes).
+- les cellules d’un même processus peuvent être géographiquement éloignées,
+- augmentant le nombre de voisins distants et le coût de communication (échanges de cellules fantômes, synchronisations plus fréquentes).
 
 On a donc un compromis classique :
 
@@ -259,8 +259,8 @@ On a donc un compromis classique :
 
 L’algorithme de Barnes–Hut construit un *quadtree* en 2D (ou *octree* en 3D) et atteint une complexité moyenne en $O(N \log N)$. Une idée de parallélisation avec MPI :
 
-- Distribuer les **sous-arbres** du quadtree entre les processus, de sorte que chaque processus gère un certain nombre de boîtes (nodes) représentant un nombre similaire d’étoiles.
-- Certains niveaux hauts de l’arbre (grosses boîtes englobantes) peuvent être **répliqués** sur plusieurs processus (en lecture seule), afin d’éviter une communication excessive lors du calcul des forces.
+- Distribuer les sous-arbres du quadtree entre les processus, de sorte que chaque processus gère un certain nombre de boîtes (nodes) représentant un nombre similaire d’étoiles.
+- Certains niveaux hauts de l’arbre (grosses boîtes englobantes) peuvent être répliqués sur plusieurs processus (en lecture seule), afin d’éviter une communication excessive lors du calcul des forces.
 - Chaque processus :
   - construit localement sa partie de l’arbre,
   - participe à un échange global (par exemple `Allgather`) pour obtenir les centres de masse des boîtes de haut niveau,
@@ -275,7 +275,7 @@ Cette approche réduirait la complexité asymptotique et pourrait mieux s’adap
 En résumé :
 
 - Nous avons implémenté et testé la parallélisation avec numba, la séparation affichage / calcul avec MPI, et la parallélisation du calcul avec MPI + numba.
-- Pour le cas testé ($N = 1000$ étoiles), la version **séquentielle avec numba 1 thread** reste la plus rapide.
+- Pour le cas testé ($N = 1000$ étoiles), la version séquentielle avec numba 1 thread reste la plus rapide.
 - Les versions parallèles sont pénalisées par l’overhead des threads et des communications MPI, ce qui est cohérent avec la taille relativement modeste du problème.
 - Néanmoins, le travail met en évidence :
   - les techniques de parallélisation (threads, MPI, séparation I/O / calcul),
