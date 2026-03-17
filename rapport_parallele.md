@@ -4,6 +4,17 @@
 
 L’objectif de ce travail est d’étudier la parallélisation d’un code de simulation de galaxie à $N$ corps, basé sur une grille cartésienne, en utilisant à la fois numba (parallélisme par threads) et MPI (parallélisme par processus).
 
+### Configuration de la machine de test
+
+Les expériences ont été réalisées sur la machine de l’étudiant, avec la configuration suivante :
+
+- Ordinateur : MacBook Pro
+- Système d’exploitation : macOS (version récente)
+- Processeur : Apple M3 (12 cœurs logiques utilisés dans les tests)
+- Mémoire vive : 18 Go de RAM
+- Interpréteur Python : environnement virtuel `.venv` (Python 3.14)
+
+
 Nous avons implémenté et testé trois configurations principales :
 
 1. Version séquentielle avec numba (sans MPI), puis numba avec `parallel=True` et plusieurs nombres de threads.
